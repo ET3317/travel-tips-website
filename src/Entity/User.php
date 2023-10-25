@@ -6,10 +6,13 @@ use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use CreatedAtTrait;
     use UpdatedAtTrait;
@@ -35,7 +38,7 @@ class User implements UserInterface
     private array $roles = [];
 
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 80)]
     private ?string $password = null;
 
     #[ORM\Column(length: 20)]
