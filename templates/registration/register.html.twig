@@ -1,19 +1,7 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_security.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
-{% endblock %}
+{% include 'forms/form_register.html.twig' %}
+{% endblock body %}
