@@ -1,0 +1,52 @@
+.home-container-title{
+    display: flex;
+    flex-direction: row;
+}
+.cards-tips-picture-home{
+    width:35vw;
+}
+.good-tips-picture{
+    width:40vw;
+}
+.container-tips-home{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+.form-post-tips{
+    display: flex;
+    flex-direction: column;
+    width:50vw;
+}
+
+@media screen and (max-width: 700px) {
+    .home-container-title{
+        flex-direction: column-reverse;
+    }
+    .cards-tips-picture-home {
+        width:90vw;
+        justify-content: center;
+        margin: auto;
+    }
+    #left-tips-picture{
+        display: none;
+    }
+    .welcome-text{
+        width:5vh;
+    }
+    #container-text-welcome{
+        margin-top: 5%!important;
+    }
+    .good-tips-picture{
+        width:90vw;
+    }
+    .container-tips-home{
+        flex-direction: column;
+        margin : 5vh
+    }
+    .form-post-tips{
+        width:90vw;
+    }
+
+}
