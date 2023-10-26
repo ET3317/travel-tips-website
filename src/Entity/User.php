@@ -37,10 +37,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
+    private ?string $plainPassword = null;
+
 
     #[ORM\Column(length: 80)]
     private ?string $password = null;
 
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
     #[ORM\Column(length: 20)]
     private ?string $username = null;
 
@@ -110,7 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -121,6 +125,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles ?: [];
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string|null $plainPassword
+     */
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 
 
