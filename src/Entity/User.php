@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -23,15 +25,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 75)]
+    #[Assert\NotBlank(message:'Firstname can\'t be blank')]
+    #[Assert\Length(
+        min: 3,
+        minMessage: 'Firstname should have at least {{ limit }} characters',
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 75)]
+    #[Assert\NotBlank(message:'Lastname can\'t be blank')]
+    #[Assert\Length(
+        min: 2,
+        minMessage: 'Lastname should have at least {{ limit }} characters',
+    )]
     private ?string $lastname = null;
 
     /**
      * @ORM\Column(type="string", unique=true)
      */
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message:'Lastname can\'t be blank')]
+    #[Assert\Email(message: 'Invalid email format')]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
@@ -41,12 +55,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: 'Password can\'t be blank')]
     private ?string $password = null;
 
     /**
      * @ORM\Column(type="string", unique=true)
      */
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: 'Username can\'t be blank')]
     private ?string $username = null;
 
     #[ORM\Column(length: 255, nullable: true)]
