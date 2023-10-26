@@ -48,6 +48,7 @@
             <div class="flex mr-4 items-center">
                 <div class="flex flex-row py-2 px-3">
                     {% if app.user %}
+                        <p>Bonjour {{ app.user.firstname }} &emsp; </p>
                         <a href="{{ path('app_user_show', {"id": app.user.id}) }}">
                             <div class="flex items-center relative cursor-pointer whitespace-nowrap hover:text-gray-400"> Profile &emsp; </div>
                         </a>
