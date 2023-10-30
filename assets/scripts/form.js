@@ -1,10 +1,10 @@
 //Random Picture Register
 // Tableau d'URLs d'images
 const imageUrls = [
-    '/build/img/1.jpg',
-    '/build/img/2.jpg',
-    '/build/img/3.jpg',
-    '/build/img/4.jpg',
+    '/build/images/random/1.jpg',
+    '/build/images/random/2.jpg',
+    '/build/images/random/3.jpg',
+    '/build/images/random/4.jpg',
 ];
 
 // Générer un nombre aléatoire entre 0 et 3 (pour accéder au tableau)
