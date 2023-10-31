@@ -37,42 +37,11 @@
         </div>
     </div>
     <!-- End Profile Card -->
-
-    <!-- Profile Card -->
-{#    <div class="w-screen h-30 bg-white flex flex-row flex-wrap p-3">
-        <div class="mx-auto w-2/3">
-            <div class="rounded-lg shadow-lg bg-gray-600 w-full flex flex-row flex-wrap p-3 antialiased" style="
-  background-image: url('https://images.unsplash.com/photo-1578836537282-3171d77f8632?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
-  background-repeat: no-repat;
-  background-size: cover;
-  background-blend-mode: multiply;
-  height:60vh;
-">
-                <div class="md:w-1/3 w-full">
-                    <img class="rounded-lg shadow-lg antialiased" src="/images/users/{{ user.imageName }}" style="height:50vh; width: auto">
-                </div>
-                <div class="md:w-2/3 w-full px-3 flex flex-row flex-wrap">
-                    <div class="w-full text-right text-gray-700 font-semibold relative pt-3 md:pt-0">
-                        <div class="text-2xl text-white leading-tight">{{ user.firstname ~ ' ' ~ user.lastname }}</div>
-
-                        <div class="text-normal text-gray-300 hover:text-gray-400 cursor-pointer"><span class="border-b border-dashed border-gray-500 pb-1">{{ user.email }}</span></div>
-                        #}{#                        <div class="text-sm text-gray-300 hover:text-gray-400 cursor-pointer md:absolute pt-3 md:pt-0 bottom-0 right-0">Last Seen: <b>2 days ago</b></div>#}{#
-                    </div>
-                    {% if is_granted("user_edit", user) %}
-                        <a href="{{ path('app_user_edit', {'id': user.id}) }}">
-                            <button class="w-50 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">Edit</button>
-                        </a>
-                    {% endif %}
-                    {% if is_granted("user_delete", user) %}
-                        <div class="w-50 h-10 ml-3 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                            {{ include('user/_delete_form.html.twig') }}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>#}
-    <!-- End Profile Card -->
-    <h2>TIPS PUBLIÉS PAR </h2>
-    <h2>STATS</h2>
+    {% if userTips %}
+    {% for tip in userTips %}
+        {% include 'components/tips-card.html.twig' with {'tip': tip} %}
+    {% endfor %}
+    {% else %}
+    <h3>There's not published tips</h3>
+    {% endif %}
 {% endblock %}
