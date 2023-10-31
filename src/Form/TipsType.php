@@ -17,25 +17,34 @@ class TipsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [ // Utilisez TextType pour le champ 'text'
-                'constraints' => [ // Ajoutez une contrainte de validation
+            ->add('title', TextType::class, [
+                'label' => 'Title', // Set the label
+                'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a title for your tip', // Message à afficher en cas de validation échouée
+                        'message' => 'Please enter a title for your tip',
                     ]),
                 ],
-            ])
-            ->add('text', TextareaType::class, [ // Utilisez TextType pour le champ 'text'
-                'constraints' => [ // Ajoutez une contrainte de validation
-                    new NotBlank([
-                        'message' => 'Please enter a text for your tip', // Message à afficher en cas de validation échouée
-                    ]),
+                'attr' => [
+                    'class' => 'title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none',
+                    'spellcheck' => 'false',
+                    'placeholder' => 'Title',
                 ],
             ])
-            ->add('user', HiddenType::class, [
-                'data' => $options['user'], // Cette option doit être passée lors de la création du formulaire
+            ->add('text', TextareaType::class, [
+                'label' => 'text', // Set the label
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a text for your tip',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none',
+                    'spellcheck' => 'false',
+                    'placeholder' => 'Describe everything about this post here',
+                ],
             ])
             ->add('imageFile', VichImageType::class, [
-                'required' => true, // Pour permettre la soumission de formulaires sans image
+                'required' => true,
             ]);
     }
 
