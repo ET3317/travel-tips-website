@@ -21,6 +21,14 @@ class TipsRepository extends ServiceEntityRepository
         parent::__construct($registry, Tips::class);
     }
 
+    public function findOneTip(): ?Tips
+    {
+        return $this->createQueryBuilder('t')
+            ->setMaxResults(1) // Obtenez seulement une astuce (peu importe comment vous choisissez la première)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Tips[] Returns an array of Tips objects
 //     */
