@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tips;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -47,16 +48,22 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user, Security $security): Response
+    public function show(User $user, Security $security, EntityManagerInterface $entityManager): Response
     {
-     /*   $currentUser = $security->getUser();
+        $currentUser = $security->getUser();
+        $tipsRepository = $entityManager->getRepository(Tips::class);
+
         if ($currentUser !== $user) {
             throw new AccessDeniedException('Accès refusé');
-        }*/
+        }
+
+        // Récupérer les astuces (tips) de l'utilisateur
+        $userTips = $tipsRepository->findBy(['user' => $user]);
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'userTips' => $userTips,
         ]);
     }
 

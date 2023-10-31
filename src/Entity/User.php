@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Entity\Traits\CreatedAtTrait;
 use App\Entity\Traits\UpdatedAtTrait;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,6 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         min: 3,
         minMessage: 'Firstname should have at least {{ limit }} characters',
     )]
+
     private ?string $firstname = null;
 
     #[ORM\Column(length: 75)]
@@ -76,11 +79,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Tips::class)]
+    private Collection $tips;
+
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
         $this->updated_at = new \DateTimeImmutable();
+        $this->tips = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -249,6 +256,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    /**
+     * @return Collection<int, Tips>
+     */
+    public function getTips(): Collection
+    {
+        return $this->tips;
+    }
+
+    public function addTip(Tips $tip): static
+    {
+        if (!$this->tips->contains($tip)) {
+            $this->tips->add($tip);
+            $tip->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTip(Tips $tip): static
+    {
+        if ($this->tips->removeElement($tip)) {
+            // set the owning side to null (unless already changed)
+            if ($tip->getUserId() === $this) {
+                $tip->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 
 }
