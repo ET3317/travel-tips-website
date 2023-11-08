@@ -10,7 +10,18 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script src="https://kit.fontawesome.com/dd5f3c1c1b.js" crossorigin="anonymous"></script>
         {% endblock %}
+
+        <!-- Display flash messages -->
+{#        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endfor %}#}
+
     </head>
     <body>
     {% include '_includes/navbar.html.twig' %}

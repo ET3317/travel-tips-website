@@ -16,10 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+
+    #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(TipsRepository $tipsRepository, UserRepository $userRepository, FormFactoryInterface $formFactory, EntityManagerInterface $entityManager, Request $request): Response
     {
         $tips = $tipsRepository->findAll();
+        // Trier les tips par date de création, du plus récent au plus ancien
+        usort($tips, function (Tips $a, Tips $b) {
+            return $b->getCreatedAt() <=> $a->getCreatedAt();
+        });
         $tip = $tipsRepository->findOneTip();
         $users = $userRepository->findAll();
         // Créez une nouvelle instance de Tips
@@ -39,6 +44,16 @@ class HomeController extends AbstractController
             // Utilisez $entityManager pour persister l'objet Tips
             $entityManager->persist($newTip);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Tips is published ! Thanks for your contribution'
+            );
+
+            // Ajoutez l'ID de l'élément à cibler dans la variable de session
+            $request->getSession()->set('element_to_focus', 'form-tips-editor'); // Remplacez 'form-title' par l'ID de l'élément que vous souhaitez cibler
+
+            // Redirection vers la même page pour vider le formulaire
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('home/index.html.twig', [

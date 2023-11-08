@@ -45,6 +45,9 @@ class TipsType extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, [
                 'required' => true,
+                'attr' => [
+                    'class' => 'button-upload-tips',
+                ],
             ]);
     }
 
